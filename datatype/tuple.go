@@ -15,6 +15,7 @@
 package datatype
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/datastax/go-cassandra-native-protocol/primitive"
 	"io"
@@ -48,7 +49,16 @@ func (t *tupleType) Clone() DataType {
 }
 
 func (t *tupleType) String() string {
-	return fmt.Sprintf("tuple<%v>", t.fieldTypes)
+	buf := &bytes.Buffer{}
+	buf.WriteString("tuple<")
+	for i, elementType := range t.fieldTypes {
+		if i > 0 {
+			buf.WriteString(",")
+		}
+		buf.WriteString(elementType.String())
+	}
+	buf.WriteString(">")
+	return buf.String()
 }
 
 func (t *tupleType) MarshalJSON() ([]byte, error) {

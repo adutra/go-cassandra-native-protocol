@@ -277,3 +277,22 @@ func TestReadTupleType(t *testing.T) {
 		}
 	})
 }
+
+func Test_tupleType_String(t1 *testing.T) {
+	tests := []struct {
+		name       string
+		fieldTypes []DataType
+		want       string
+	}{
+		{"empty", []DataType{}, "tuple<>"},
+		{"simple", []DataType{Int, Varchar, Boolean}, "tuple<int,varchar,boolean>"},
+		{"complex", []DataType{Int, NewTupleType(Varchar, Boolean)}, "tuple<int,tuple<varchar,boolean>>"},
+	}
+	for _, tt := range tests {
+		t1.Run(tt.name, func(t *testing.T) {
+			tuple := NewTupleType(tt.fieldTypes...)
+			got := tuple.String()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}

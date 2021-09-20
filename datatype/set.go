@@ -82,9 +82,3 @@ func readSetType(source io.Reader, version primitive.ProtocolVersion) (decoded D
 	}
 	return setType, nil
 }
-
-type SetCodec = ListCodec
-
-func NewSetCodec(elementCodec Codec) *SetCodec {
-	return &SetCodec{ElementCodec: elementCodec}
-}

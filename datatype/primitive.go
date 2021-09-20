@@ -19,11 +19,26 @@ import (
 )
 
 var (
-	Timestamp PrimitiveType = &primitiveType{code: primitive.DataTypeCodeTimestamp}
-	Inet      PrimitiveType = &primitiveType{code: primitive.DataTypeCodeInet}
+	Ascii     PrimitiveType = &primitiveType{code: primitive.DataTypeCodeAscii}
+	Bigint    PrimitiveType = &primitiveType{code: primitive.DataTypeCodeBigint}
+	Blob      PrimitiveType = &primitiveType{code: primitive.DataTypeCodeBlob}
+	Boolean   PrimitiveType = &primitiveType{code: primitive.DataTypeCodeBoolean}
+	Counter   PrimitiveType = &primitiveType{code: primitive.DataTypeCodeCounter}
 	Date      PrimitiveType = &primitiveType{code: primitive.DataTypeCodeDate}
-	Time      PrimitiveType = &primitiveType{code: primitive.DataTypeCodeTime}
+	Decimal   PrimitiveType = &primitiveType{code: primitive.DataTypeCodeDecimal}
+	Double    PrimitiveType = &primitiveType{code: primitive.DataTypeCodeDouble}
 	Duration  PrimitiveType = &primitiveType{code: primitive.DataTypeCodeDuration}
+	Float     PrimitiveType = &primitiveType{code: primitive.DataTypeCodeFloat}
+	Inet      PrimitiveType = &primitiveType{code: primitive.DataTypeCodeInet}
+	Int       PrimitiveType = &primitiveType{code: primitive.DataTypeCodeInt}
+	Smallint  PrimitiveType = &primitiveType{code: primitive.DataTypeCodeSmallint}
+	Time      PrimitiveType = &primitiveType{code: primitive.DataTypeCodeTime}
+	Timestamp PrimitiveType = &primitiveType{code: primitive.DataTypeCodeTimestamp}
+	Timeuuid  PrimitiveType = &primitiveType{code: primitive.DataTypeCodeTimeuuid}
+	Tinyint   PrimitiveType = &primitiveType{code: primitive.DataTypeCodeTinyint}
+	Uuid      PrimitiveType = &primitiveType{code: primitive.DataTypeCodeUuid}
+	Varchar   PrimitiveType = &primitiveType{code: primitive.DataTypeCodeVarchar}
+	Varint    PrimitiveType = &primitiveType{code: primitive.DataTypeCodeVarint}
 )
 
 type PrimitiveType interface {
@@ -79,7 +94,7 @@ func (t *primitiveType) String() string {
 	case primitive.DataTypeCodeDate:
 		return "date"
 	case primitive.DataTypeCodeTime:
-		return "tune"
+		return "time"
 	case primitive.DataTypeCodeSmallint:
 		return "smallint"
 	case primitive.DataTypeCodeTinyint:

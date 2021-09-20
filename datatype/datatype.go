@@ -21,6 +21,8 @@ import (
 )
 
 type DataType interface {
+	fmt.Stringer
+
 	GetDataTypeCode() primitive.DataTypeCode
 	Clone() DataType
 }

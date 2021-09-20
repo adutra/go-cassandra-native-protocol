@@ -340,3 +340,36 @@ func TestReadUserDefinedType(t *testing.T) {
 		}
 	})
 }
+
+func Test_userDefinedType_String(t1 *testing.T) {
+	tests := []struct {
+		name       string
+		keyspace   string
+		udtName    string
+		fieldNames []string
+		fieldTypes []DataType
+		want       string
+	}{
+		{"empty", "ks1", "type1", []string{}, []DataType{}, "ks1.type1<>"},
+		{"simple", "ks1", "type1", []string{"f1", "f2"}, []DataType{Int, Varchar}, "ks1.type1<f1:int,f2:varchar>"},
+		{
+			"complex",
+			"ks1",
+			"type1",
+			[]string{"f1", "f2"},
+			[]DataType{Int, func() DataType {
+				udt2, _ := NewUserDefinedType("ks1", "type2", []string{"f2a", "f2b"}, []DataType{Varchar, Boolean})
+				return udt2
+			}()},
+			"ks1.type1<f1:int,f2:ks1.type2<f2a:varchar,f2b:boolean>>",
+		},
+	}
+	for _, tt := range tests {
+		t1.Run(tt.name, func(t *testing.T) {
+			udt, err := NewUserDefinedType(tt.keyspace, tt.udtName, tt.fieldNames, tt.fieldTypes)
+			require.NoError(t, err)
+			got := udt.String()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}

@@ -14,8 +14,10 @@
 
 /*
 
-Package datatype contains interfaces, types for interacting with CQL data type definitions, as well as functions to
-read and write CQL data type signatures, as defined in section 6 of the CQL protocol specifications.
+Package datacodec contains functionality to encode and decode CQL data.
+
+This package is not used anywhere in this library, but can be used by client code to encode and decode actual CQL values
+sent to or received from any Cassandra-compatible backend.
 
 */
-package datatype
+package datacodec

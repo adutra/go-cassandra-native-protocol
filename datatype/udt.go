@@ -15,6 +15,7 @@
 package datatype
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/datastax/go-cassandra-native-protocol/primitive"
 	"io"
@@ -75,7 +76,21 @@ func (t *userDefinedType) Clone() DataType {
 }
 
 func (t *userDefinedType) String() string {
-	return fmt.Sprintf("%v.%v<%v>", t.keyspace, t.name, t.fieldTypes)
+	buf := &bytes.Buffer{}
+	buf.WriteString(t.keyspace)
+	buf.WriteString(".")
+	buf.WriteString(t.name)
+	buf.WriteString("<")
+	for i, fieldType := range t.fieldTypes {
+		if i > 0 {
+			buf.WriteString(",")
+		}
+		buf.WriteString(t.fieldNames[i])
+		buf.WriteString(":")
+		buf.WriteString(fieldType.String())
+	}
+	buf.WriteString(">")
+	return buf.String()
 }
 
 func (t *userDefinedType) MarshalJSON() ([]byte, error) {
