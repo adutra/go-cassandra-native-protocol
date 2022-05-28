@@ -14,23 +14,28 @@
 
 package message
 
-var DefaultMessageCodecs = []Codec{
-	&startupCodec{},
-	&optionsCodec{},
-	&queryCodec{},
-	&prepareCodec{},
-	&executeCodec{},
-	&registerCodec{},
-	&batchCodec{},
-	&authResponseCodec{},
-	&errorCodec{},
-	&readyCodec{},
-	&authenticateCodec{},
-	&supportedCodec{},
-	&resultCodec{},
-	&eventCodec{},
-	&authChallengeCodec{},
-	&authSuccessCodec{},
-	// DSE-specific
-	&reviseCodec{},
+import "github.com/datastax/go-cassandra-native-protocol/primitive"
+
+// DefaultMessageCodecs returns a map of all the default message codecs declared in this package, keyed by their
+// respective opcodes.
+func DefaultMessageCodecs() map[primitive.OpCode]Codec {
+	return map[primitive.OpCode]Codec{
+		primitive.OpCodeAuthChallenge: &authChallengeCodec{},
+		primitive.OpCodeAuthResponse:  &authResponseCodec{},
+		primitive.OpCodeAuthSuccess:   &authSuccessCodec{},
+		primitive.OpCodeAuthenticate:  &authenticateCodec{},
+		primitive.OpCodeBatch:         &batchCodec{},
+		primitive.OpCodeDseRevise:     &reviseCodec{},
+		primitive.OpCodeError:         &errorCodec{},
+		primitive.OpCodeEvent:         &eventCodec{},
+		primitive.OpCodeExecute:       &executeCodec{},
+		primitive.OpCodeOptions:       &optionsCodec{},
+		primitive.OpCodePrepare:       &prepareCodec{},
+		primitive.OpCodeQuery:         &queryCodec{},
+		primitive.OpCodeReady:         &readyCodec{},
+		primitive.OpCodeRegister:      &registerCodec{},
+		primitive.OpCodeResult:        &resultCodec{},
+		primitive.OpCodeStartup:       &startupCodec{},
+		primitive.OpCodeSupported:     &supportedCodec{},
+	}
 }

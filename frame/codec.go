@@ -119,10 +119,7 @@ func NewRawCodec(messageCodecs ...message.Codec) RawCodec {
 func NewRawCodecWithCompression(compressor BodyCompressor, messageCodecs ...message.Codec) RawCodec {
 	frameCodec := &codec{
 		compressor:    compressor,
-		messageCodecs: make(map[primitive.OpCode]message.Codec, len(message.DefaultMessageCodecs)+len(messageCodecs)),
-	}
-	for _, messageCodec := range message.DefaultMessageCodecs {
-		frameCodec.messageCodecs[messageCodec.GetOpCode()] = messageCodec
+		messageCodecs: message.DefaultMessageCodecs(),
 	}
 	for _, messageCodec := range messageCodecs {
 		frameCodec.messageCodecs[messageCodec.GetOpCode()] = messageCodec
